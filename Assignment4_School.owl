@@ -1,0 +1,366 @@
+@prefix : <http://www.semanticweb.org/vanshitas/ontologies/assignment4_school#> .
+@prefix A4S: <http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School> .
+
+<http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School> rdf:type owl:Ontology ;
+                                                                      rdfs:comment "Ontology about school"@en .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School#Studies_at
+:Studies_at rdf:type owl:ObjectProperty ,
+                     owl:FunctionalProperty ;
+            rdfs:domain A4S:School .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School#Works_at
+:Works_at rdf:type owl:ObjectProperty ,
+                   owl:FunctionalProperty ;
+          rdfs:domain A4S:School ;
+          rdfs:range A4S:Study_Locations .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School#containsTeacher
+:containsTeacher rdf:type owl:ObjectProperty ;
+                 rdfs:subPropertyOf owl:topObjectProperty ;
+                 owl:inverseOf A4S:employees ;
+                 rdf:type owl:InverseFunctionalProperty .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School#hasCharacteristic
+:hasCharacteristic rdf:type owl:ObjectProperty ,
+                            owl:SymmetricProperty ;
+                   rdfs:domain owl:Thing ;
+                   rdfs:range owl:Thing .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School#hasValue
+:hasValue rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf A4S:employees .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School#learns_at_a
+:learns_at_a rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf A4S:learns .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School/admits
+A4S:admits rdf:type owl:ObjectProperty ;
+           rdfs:domain A4S:School ;
+           rdfs:range A4S:Student ;
+           rdfs:comment "school admits students"@en .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School/employees
+A4S:employees rdf:type owl:ObjectProperty ,
+                       owl:FunctionalProperty ;
+              rdfs:domain A4S:School ;
+              rdfs:range A4S:Staff ;
+              rdfs:comment "school employees staff"@en .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School/learns
+A4S:learns rdf:type owl:ObjectProperty ,
+                    owl:FunctionalProperty ;
+           rdfs:domain A4S:Student ;
+           rdfs:range A4S:School_Curriculum ;
+           rdfs:comment "student learns a subject"@en .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School/teaches
+A4S:teaches rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf owl:topObjectProperty ;
+            rdf:type owl:FunctionalProperty ;
+            rdfs:domain A4S:Teacher ;
+            rdfs:range A4S:School_Curriculum ;
+            rdfs:comment "teacher teaches a subject"@en .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School#Location
+:Location rdf:type owl:DatatypeProperty ;
+          rdfs:subPropertyOf owl:topDataProperty .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School/AdmitedOn
+A4S:AdmitedOn rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf owl:topDataProperty ;
+              rdfs:domain A4S:Student ;
+              rdfs:range xsd:dateTime ;
+              rdfs:comment "when student joined the school / club"@en .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School/StaffID
+A4S:StaffID rdf:type owl:DatatypeProperty ,
+                     owl:FunctionalProperty ;
+            rdfs:domain A4S:Staff ;
+            rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School/StudentID
+A4S:StudentID rdf:type owl:DatatypeProperty ;
+              rdfs:domain A4S:Student ;
+              rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School/teach
+A4S:teach rdf:type owl:DatatypeProperty ;
+          rdfs:domain A4S:Teacher ;
+          rdfs:range xsd:string .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School#Non-Teacher
+:Non-Teacher rdf:type owl:Class ;
+             rdfs:subClassOf A4S:Staff .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School#SchoolClubs
+:SchoolClubs rdf:type owl:Class ;
+             owl:disjointWith A4S:School_Curriculum .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School/Junior
+A4S:Junior rdf:type owl:Class ;
+           rdfs:subClassOf A4S:Student .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School/Private
+A4S:Private rdf:type owl:Class ;
+            rdfs:subClassOf A4S:School ,
+                            [ rdf:type owl:Restriction ;
+                              owl:onProperty :hasCharacteristic ;
+                              owl:hasValue :IB_curriculum
+                            ] .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School/Public
+A4S:Public rdf:type owl:Class ;
+           rdfs:subClassOf A4S:School .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School/School
+A4S:School rdf:type owl:Class ;
+           rdfs:comment "Class denotes school"@en .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School/School_Curriculum
+A4S:School_Curriculum rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School/Senior
+A4S:Senior rdf:type owl:Class ;
+           rdfs:subClassOf A4S:Student ,
+                           [ rdf:type owl:Restriction ;
+                             owl:onProperty :hasCharacteristic ;
+                             owl:hasValue :Grade_10
+                           ] .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School/Staff
+A4S:Staff rdf:type owl:Class ;
+          rdfs:subClassOf [ rdf:type owl:Restriction ;
+                            owl:onProperty :hasValue ;
+                            owl:hasValue :StaffID
+                          ] ;
+          owl:disjointWith A4S:Student .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School/Student
+A4S:Student rdf:type owl:Class ;
+            rdfs:subClassOf [ rdf:type owl:Restriction ;
+                              owl:onProperty :hasCharacteristic ;
+                              owl:hasValue :StudentID
+                            ] .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School/Study_Locations
+A4S:Study_Locations rdf:type owl:Class .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School/Teacher
+A4S:Teacher rdf:type owl:Class ;
+            rdfs:subClassOf A4S:Staff .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School#Chess
+:Chess rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School#Chess_club
+:Chess_club rdf:type owl:NamedIndividual ,
+                     :SchoolClubs ;
+            A4S:employees A4S:Nate ;
+            A4S:teach "Chess"^^xsd:string .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School#Dance
+:Dance rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School#Dance_club
+:Dance_club rdf:type owl:NamedIndividual ,
+                     :SchoolClubs ;
+            A4S:employees A4S:Tony ;
+            A4S:teach "Dance"^^xsd:string .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School#Grade_10
+:Grade_10 rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School#IB_curriculum
+:IB_curriculum rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School#Librarian
+:Librarian rdf:type owl:NamedIndividual ,
+                    :Non-Teacher ;
+           :Works_at A4S:Library ;
+           A4S:StaffID "jkl567"^^xsd:string .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School#Maintenence
+:Maintenence rdf:type owl:NamedIndividual ,
+                      :Non-Teacher ;
+             :Works_at A4S:Public_School ;
+             A4S:StaffID "klm897"^^xsd:string .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School#StaffID
+:StaffID rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School#StudentID
+:StudentID rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School/Classroom
+A4S:Classroom rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School/Daniel
+A4S:Daniel rdf:type owl:NamedIndividual ,
+                    A4S:Junior ;
+           A4S:AdmitedOn "2021-01-05T09:00:00"^^xsd:dateTime ;
+           A4S:StudentID "gef334"^^xsd:string .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School/GCSE
+A4S:GCSE rdf:type owl:NamedIndividual ,
+                  A4S:School_Curriculum ;
+         owl:sameAs A4S:Public_School ;
+         A4S:teach "British education system"^^xsd:string .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School/IB
+A4S:IB rdf:type owl:NamedIndividual ,
+                A4S:School_Curriculum ;
+       A4S:teaches :IB_curriculum ;
+       A4S:teach "International Baccalaureate"^^xsd:string .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School/International_School
+A4S:International_School rdf:type owl:NamedIndividual ,
+                                  A4S:Private ,
+                                  A4S:School ;
+                         A4S:admits A4S:Rick ;
+                         A4S:employees A4S:Tony ;
+                         A4S:teach "IB"^^xsd:string .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School/Library
+A4S:Library rdf:type owl:NamedIndividual ,
+                     A4S:Study_Locations ;
+            A4S:employees :Librarian ;
+            :Location "School Campus"^^xsd:string .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School/Linda
+A4S:Linda rdf:type owl:NamedIndividual ,
+                   A4S:Student ;
+          :Studies_at A4S:Public_School ;
+          :learns_at_a A4S:Park ;
+          A4S:learns :Chess ,
+                     A4S:Science ;
+          A4S:AdmitedOn "2021-03-12T12:00:00"^^xsd:dateTime ;
+          A4S:StudentID "hjk554"^^xsd:string .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School/Mathew
+A4S:Mathew rdf:type owl:NamedIndividual ,
+                    A4S:Student ;
+           :Studies_at A4S:International_School ;
+           A4S:learns A4S:IB ;
+           A4S:AdmitedOn "2011-01-12T09:00:00"^^xsd:dateTime ;
+           A4S:StudentID "abc123"^^xsd:string .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School/Nate
+A4S:Nate rdf:type owl:NamedIndividual ,
+                  A4S:Teacher ;
+         owl:sameAs A4S:Tony ;
+         A4S:teaches :Chess ,
+                     A4S:Mathew ;
+         A4S:teach "Chemistry"^^xsd:string .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School/Park
+A4S:Park rdf:type owl:NamedIndividual ,
+                  A4S:Study_Locations ;
+         A4S:employees :Maintenence ;
+         :Location "Outside School Campus"^^xsd:string .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School/Public_School
+A4S:Public_School rdf:type owl:NamedIndividual ,
+                           A4S:Public ,
+                           A4S:School ;
+                  A4S:admits A4S:Linda ;
+                  A4S:teach "GCSE"^^xsd:string .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School/Rick
+A4S:Rick rdf:type owl:NamedIndividual ,
+                  A4S:Student ;
+         :Studies_at A4S:International_School ;
+         A4S:learns :Dance ,
+                    A4S:IB ;
+         A4S:AdmitedOn "2012-01-12T09:00:00"^^xsd:dateTime ;
+         A4S:StudentID "def456"^^xsd:string .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School/Science
+A4S:Science rdf:type owl:NamedIndividual .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School/Tony
+A4S:Tony rdf:type owl:NamedIndividual ,
+                  A4S:Teacher ;
+         A4S:teaches A4S:Mathew ,
+                     A4S:Rick ;
+         A4S:teach "Biology"^^xsd:string .
+
+
+###  http://www.semanticweb.org/vanshitas/ontologies/Assignment4_School/garden
+A4S:garden rdf:type owl:NamedIndividual .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
